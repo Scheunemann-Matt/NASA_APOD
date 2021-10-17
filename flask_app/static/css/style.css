@@ -1,0 +1,24 @@
+#target {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    left: 0;
+    top: 0;
+}
+
+.w-max-content {
+    width: max-content;
+}
+
+.mw-75 {
+    max-width: 75%;
+}
+
+.mh-75 {
+    max-height: 75vh;
+}
+
+.stickied {
+    position: sticky;
+    top: 50px;
+}
