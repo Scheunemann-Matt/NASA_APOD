@@ -26,7 +26,6 @@ def add_to_archive(date):
 
     return render_template(f'/{date}')
 
-
 #==================================
 # Login/Registration Routes
 #==================================

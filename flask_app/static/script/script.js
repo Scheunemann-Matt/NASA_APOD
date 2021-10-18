@@ -21,7 +21,7 @@ function createObserver() {
     observer.observe(headTarget);
 }
 
-function handleIntersect(entries, observer) {
+function handleIntersect(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting){
             removeClasses(document.querySelector('#content'), classToAddContent)
