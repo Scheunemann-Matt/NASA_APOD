@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA APOD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+</head>
+<body class="bg-dark">
+    <div class="container-fluid">
+        <div class="d-flex gap-2 p-2 px-5 bg-secondary">
+            <a href="/random" class="btn btn-dark p-1">Random APOD</a>
+            <a href="https://apod.nasa.gov/apod/archivepix.html" class="btn btn-dark p-1">APOD archive (external)</a>
+            <a href="users/logout" class="btn btn-dark ms-auto p-1">Logout</a>
+        </div>
+        <div class="w-75 p-5">
+            <p class="mb-2"><a href="/apod/somedate">Archived APOD 1</a></p>
+            <p class="mb-2"><a href="/apod/somedate">Archived APOD 2</a></p>
+            <p class="mb-2"><a href="/apod/somedate">Archived APOD 3</a></p>
+            <p class="mb-2"><a href="/apod/somedate">Archived APOD 4</a></p>
+            <p class="mb-2"><a href="/apod/somedate">Archived APOD 5</a></p>
+        </div>
+</body>

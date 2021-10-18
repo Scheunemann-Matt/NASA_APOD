@@ -8,6 +8,28 @@ bcrypt = Bcrypt(app)
 def rootRoute():
     return render_template('index.html')
 
+@app.route('/random')
+def random():
+
+    return render_template('index.html')
+
+#==================================
+# Archive Routes
+#==================================
+@app.route('/archive')
+def archive():
+
+    return render_template('archive.html')
+
+@app.route('/<int:date>/archive')
+def add_to_archive(date):
+
+    return render_template(f'/{date}')
+
+
+#==================================
+# Login/Registration Routes
+#==================================
 @app.route('/login')
 def load_login():
     if "flash" not in session:
