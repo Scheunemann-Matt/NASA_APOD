@@ -1,19 +1,24 @@
 from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
-from flask_app.models.model import NASA_API
+from flask_app.models.nasa_api import NASA_API
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 @app.route('/')
 def rootRoute():
-    apod = NASA_API.get_today()
+    apod = NASA_API.get_apod()
     return render_template('index.html', apod = apod)
 
 @app.route('/random')
 def random():
+    apod = NASA_API.get_apod("&count=1")
+    return render_template('index.html', apod = apod)
 
-    return render_template('index.html')
+@app.route('/<string:date>')
+def date(date):
+    apod = NASA_API.get_apod(f"&date={date}")
+    return render_template('index.html', apod = apod)
 
 #==================================
 # Archive Routes
