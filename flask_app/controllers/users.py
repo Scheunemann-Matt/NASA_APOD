@@ -2,23 +2,30 @@ from flask_app import app
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.nasa_api import NASA_API
+from flask_app.models.wiki_api import Wiki_API
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 @app.route('/')
 def rootRoute():
     apod = NASA_API.get_apod()
-    return render_template('index.html', apod = apod)
+    wiki_title = Wiki_API.get_title(apod.title)
+    wiki_parse = Wiki_API.get_page(wiki_title)
+    return render_template('index.html', apod = apod, wiki_parse = wiki_parse)
 
 @app.route('/random')
 def random():
     apod = NASA_API.get_apod("&count=1")
-    return render_template('index.html', apod = apod)
+    wiki_title = Wiki_API.get_title(apod.title)
+    wiki_parse = Wiki_API.get_page(wiki_title)
+    return render_template('index.html', apod = apod, wiki_parse = wiki_parse)
 
-@app.route('/<string:date>')
+@app.route('/apod/<string:date>')
 def date(date):
     apod = NASA_API.get_apod(f"&date={date}")
-    return render_template('index.html', apod = apod)
+    wiki_title = Wiki_API.get_title(apod.title)
+    wiki_parse = Wiki_API.get_page(wiki_title)
+    return render_template('index.html', apod = apod, wiki_parse = wiki_parse)
 
 #==================================
 # Archive Routes
