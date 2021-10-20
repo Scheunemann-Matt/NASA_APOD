@@ -10,7 +10,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 PASSWORD_REGEX = re.compile(r'(?=.*\d)(?=.*[A-Z])')
 # model the class after the users table from our database
 class User:
-    DB_NAME = "registration_schema"
+    DB_NAME = "apod_schema"
     def __init__( self , data ):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -21,25 +21,14 @@ class User:
         self.updated_at = data['updated_at']
 
     @classmethod
-    def get_all(cls):
-        query = "SELECT * FROM users;"
-        # make sure to call the connectToMySQL function with the schema you are targeting.
-        results = connectToMySQL(cls.DB_NAME).query_db(query)
-
-        users = []
-        for user in results:
-            users.append( cls(user) )
-        return users
-
-    @classmethod
     def get_one(cls, id):
         query = "SELECT * FROM users WHERE users.id = %(id)s"
         results = connectToMySQL(cls.DB_NAME).query_db(query, id)
-
-        user = cls(results)
-        if (not user):
+        if (len(results) < 1):
             return False
-        return user[0]
+
+        user = cls(results[0])
+        return user
 
     @classmethod
     def create(cls, data):

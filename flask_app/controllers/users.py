@@ -28,19 +28,6 @@ def date(date):
     return render_template('index.html', apod = apod, wiki_parse = wiki_parse)
 
 #==================================
-# Archive Routes
-#==================================
-@app.route('/archive')
-def archive():
-
-    return render_template('archive.html')
-
-@app.route('/<int:date>/archive')
-def add_to_archive(date):
-
-    return render_template(f'/{date}')
-
-#==================================
 # Login/Registration Routes
 #==================================
 @app.route('/login')
@@ -95,6 +82,12 @@ def login():
         flash("Ivalid email/password")
         session['flash'] = 'login'
         return redirect('/')
+
+    if "archive" in request.form:
+        if request.form['archive'] == 'archive':
+            return redirect('/archive')
+        else:
+            return redirect(f'/apod/{request.form["date"]}')
     return redirect('/')
 
 @app.route('/users/logout')

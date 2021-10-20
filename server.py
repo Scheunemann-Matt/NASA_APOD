@@ -1,5 +1,6 @@
 # import the class from friend.py
 from flask_app.controllers import users
+from flask_app.controllers import archives
 from flask_app import app
 
 

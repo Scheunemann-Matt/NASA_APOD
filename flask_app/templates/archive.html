@@ -15,10 +15,8 @@
             <a href="users/logout" class="btn btn-dark ms-auto p-1">Logout</a>
         </div>
         <div class="w-75 p-5">
-            <p class="mb-2"><a href="/apod/somedate">Archived APOD 1</a> | <a href="/apod/somedate/delete">Delete</a></p>
-            <p class="mb-2"><a href="/apod/somedate">Archived APOD 2</a> | <a href="/apod/somedate/delete">Delete</a></p>
-            <p class="mb-2"><a href="/apod/somedate">Archived APOD 3</a> | <a href="/apod/somedate/delete">Delete</a></p>
-            <p class="mb-2"><a href="/apod/somedate">Archived APOD 4</a> | <a href="/apod/somedate/delete">Delete</a></p>
-            <p class="mb-2"><a href="/apod/somedate">Archived APOD 5</a> | <a href="/apod/somedate/delete">Delete</a></p>
+            {% for date in dates %}
+                <p class="mb-2"><a href="/apod/{{date}}">APOD for {{date}}</a> | <a href="/apod/{{date}}/delete">Delete</a></p>
+            {% endfor %}
         </div>
 </body>
