@@ -1,6 +1,5 @@
 import os, requests
 
-# model the class after the users table from our database
 class NASA_API:
     def __init__( self , data ):
         self.date = data['date']

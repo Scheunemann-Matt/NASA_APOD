@@ -7,12 +7,9 @@ class Archive:
     def __init__(self, date):
         self.date = date
 
-    @classmethod
-    def create(cls, data):
-        query = "INSERT INTO user_archive (date, user_id, created_at, updated_at) VALUES (%(date)s, %(user_id)s, NOW(), NOW())"
-
-        return connectToMySQL(cls.DB_NAME).query_db(query, data)
-
+# ==============================================
+# Get Methods
+#===============================================
     @classmethod
     def get_one(cls, data):
         query = "SELECT * FROM user_archive WHERE user_id = %(user_id)s AND date = %(date)s"
@@ -35,9 +32,20 @@ class Archive:
 
         return dates
 
+# ==============================================
+# Create Method
+#===============================================
+    @classmethod
+    def create(cls, data):
+        query = "INSERT INTO user_archive (date, user_id, created_at, updated_at) VALUES (%(date)s, %(user_id)s, NOW(), NOW())"
+
+        return connectToMySQL(cls.DB_NAME).query_db(query, data)
+
+# ==============================================
+# Delete Method
+#===============================================
     @classmethod
     def delete(cls, data):
         query = "DELETE FROM user_archive WHERE user_id = %(user_id)s AND date = %(date)s"
         
         return connectToMySQL(cls.DB_NAME).query_db(query, data)
-

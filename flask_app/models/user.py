@@ -20,6 +20,9 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
+# ==============================================
+# Get Methods
+#===============================================
     @classmethod
     def get_one(cls, id):
         query = "SELECT * FROM users WHERE users.id = %(id)s"
@@ -31,11 +34,25 @@ class User:
         return user
 
     @classmethod
+    def get_one_from_email(cls, data):
+        email_test_query = "SELECT * FROM users WHERE email = %(email)s"
+        result = connectToMySQL(cls.DB_NAME).query_db(email_test_query, data)
+        if (len(result) < 1):
+            return False
+        return result[0]
+
+# ==============================================
+# Create Methods
+#===============================================
+    @classmethod
     def create(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW(), NOW())"
 
         return connectToMySQL(cls.DB_NAME).query_db(query, data)
 
+# ==============================================
+# Validation Methods
+#===============================================
     @classmethod
     def validate_email(cls, email):
         is_valid = True
@@ -68,11 +85,3 @@ class User:
             is_valid = False
         
         return is_valid
-
-    @classmethod
-    def get_one_from_email(cls, data):
-        email_test_query = "SELECT * FROM users WHERE email = %(email)s"
-        result = connectToMySQL(cls.DB_NAME).query_db(email_test_query, data)
-        if (len(result) < 1):
-            return False
-        return result[0]

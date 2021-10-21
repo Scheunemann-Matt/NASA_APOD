@@ -6,6 +6,9 @@ from flask_app.models.wiki_api import Wiki_API
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
+# ==============================================
+# Get APOD Routes
+#===============================================
 @app.route('/')
 def rootRoute():
     apod = NASA_API.get_apod()
@@ -40,6 +43,7 @@ def load_login():
 @app.route('/create_user', methods=['POST'])
 def create_user():
 
+    # Retrieve data from form
     data = {
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
@@ -48,22 +52,28 @@ def create_user():
         "confirm_password": request.form['confirm_password']
     }
     
+    # Validate form data
     if (not User.validate_user(data)):
         session['flash'] = "registration"
         return redirect('/login')
 
+    # Hash PW
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
-    print(pw_hash)
+    # print(pw_hash)
     data['password'] = pw_hash
 
     user_id = User.create(data)
-    session['user_id'] = user_id
-    session['user_name'] = data['first_name']
     
+    # Add user id to session
+    session['user_id'] = user_id
+    
+    # Routing for if the registration page was loaded due to trying to archive an APOD or go to their archive list.
     if "archive" in request.form:
+        # Return to archive
         if request.form['archive'] == 'archive':
             return redirect('/archive')
         else:
+            # add APOD to archive
             return redirect(f'/{request.form["date"]}/archive')
     return redirect('/')
 
@@ -73,6 +83,8 @@ def login():
         "email": request.form['email'],
         "password": request.form['password']
     }
+
+    # Validation
     is_valid = True
     user_in_db = User.get_one_from_email(data)
     print(user_in_db)
@@ -82,17 +94,21 @@ def login():
         is_valid = False
 
     if (is_valid):
+        # if valid add user id to session
         session['user_id'] = user_in_db['id']
-        session['user_name'] = user_in_db['first_name']
     if (not is_valid):
+        # if not show message and redirect back to login page
         flash("Ivalid email/password")
         session['flash'] = 'login'
-        return redirect('/')
+        return redirect('/login')
 
+    # Routing for if the registration page was loaded due to trying to archive an APOD or go to their archive list.
     if "archive" in request.form:
+        # Return to archive
         if request.form['archive'] == 'archive':
             return redirect('/archive')
         else:
+            # add APOD to archive
             return redirect(f'/{request.form["date"]}/archive')
 
     return redirect('/')
