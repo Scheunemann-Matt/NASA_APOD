@@ -1,7 +1,7 @@
 let headTarget;
-const classToAddContent = ["d-flex", "justify-content-between", "align-items-start"]
-const classToAddImage = ["col-6", "stickied"]
-const classToAddText = ["col-6", "mt-5"]
+const classToAddContent = ["flex-on", "justify-content-between", "align-items-start"]
+const classToAddImage = ["shift-left-col"]
+const classToAddText = ["shift-right-col"]
 
 window.addEventListener("load", (event) => {
     headTarget = document.querySelector("#target");
@@ -25,12 +25,12 @@ function handleIntersect(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting){
             removeClasses(document.querySelector('#content'), classToAddContent)
-            removeClasses(document.querySelector('#text_col'), classToAddText)
             removeClasses(document.querySelector('#image_col'), classToAddImage)
+            removeClasses(document.querySelector('#text_col'), classToAddText)
         } else {
             addClasses(document.querySelector('#content'), classToAddContent)
-            addClasses(document.querySelector('#text_col'), classToAddText)
             addClasses(document.querySelector('#image_col'), classToAddImage)
+            addClasses(document.querySelector('#text_col'), classToAddText)
         }
     });
 }

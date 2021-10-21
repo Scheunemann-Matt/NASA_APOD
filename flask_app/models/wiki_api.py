@@ -2,10 +2,22 @@ import os, requests
 
 
 class Wiki_API:
-    WIKI_CLASSES = ['hatnote', '"infobox"', 'infobox-caption', 'infobox-header', 'mw-headline', 'thumbcaption', 'thumbinner','wikitable', '<ul>', '<li>', 'thumbimage', 'gallery', 'infobox-below']
-    REPLACE_CLASSES = ['fs-7 ', '"table table-dark table-striped table-bordered"', 'fs-7', 'bg-black', 'title-font d-block w-max-content mw-100 mx-auto text-center', 'fs-7 mb-2', 'w-100 mb-2' ,'table table-dark table-striped table-bordered', '<ul class="list-group">', '<li class="list-group-item bg-dark text-light">', 'mb-3', 'd-flex justify-content-between flex-wrap', 'bg-dark']
+    WIKI_CLASSES = [
+        'hatnote', '"infobox"', 'infobox-caption', 
+        'infobox-header', 'mw-headline', 'thumbcaption', 
+        'thumbinner','wikitable', '<ul>', 
+        '<li>', 'thumbimage', 'gallery', 
+        'infobox-below'
+        ]
+    REPLACE_CLASSES = [
+        'fs-7 ', '"table table-dark table-striped table-bordered"', 'fs-7', 
+        'bg-black', 'title-font d-block w-max-content mw-100 mx-auto text-center', 'fs-7 mb-2', 
+        'w-100 mb-2' ,'table table-dark table-striped table-bordered', '<ul class="list-group">', 
+        '<li class="list-group-item bg-dark text-light">', 'mb-3', 'd-flex justify-content-between flex-wrap', 
+        'bg-dark'
+        ]
     URL = "https://en.wikipedia.org/w/api.php"
-    def __init__(self, data):
+    def __init__(self):
         pass
 
     @classmethod
@@ -42,8 +54,19 @@ class Wiki_API:
         result = SESS.get(url = cls.URL, params = PARAMS).json()
         text = result["parse"]["text"]["*"]
 
-        start_of_ref = text.index('<h2><span class="mw-headline" id="References">')
+        start_of_ref = text.find('<h2><span class="mw-headline" id="References">')
         text = text[0:start_of_ref]
+        
+        found_sidebar = text.find('<table class="sidebar')
+        while  found_sidebar != -1:
+            end_sidebar = text.find('</table>', found_sidebar)
+
+            left_text = text[0:found_sidebar]
+            right_text = text[end_sidebar:]
+            text = left_text+right_text
+
+            found_sidebar = text.find('<table class="sidebar')
+            
 
         text = text.replace("/wiki/", "https://www.wikipedia.org/wiki/")
         text = cls.replace_classes(text, cls.WIKI_CLASSES, cls.REPLACE_CLASSES)

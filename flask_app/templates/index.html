@@ -22,7 +22,7 @@
             {% endif %}
             <a href="/{{apod.date}}/archive" class="btn btn-dark p-1">Archive APOD</a>
         </div>
-        <div id="content" class="bg-dark p-3 pt-5">
+        <div id="content" class="bg-dark p-3 pt-5 d-xl-flex flex-col">
             <div id="image_col" class="mt-3 p-3">
             {% if apod.media_type == "image"%}
                 <img src="{{apod.url}}" alt="" class="mw-100 mh-75 mx-auto d-block">
@@ -30,7 +30,7 @@
                 <iframe src="{{apod.url}}" class="mw-100 mh-75 mx-auto d-block" controls width="1200" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             {% endif %}
                 <h1 class="text-light text-center title-font mt-2">{{apod.title}}</h1>
-                <p class="text-light text-center title-font">Image Credit: {{apod.copyright}} | Date: {{apod.date}}</p>
+                <p class="text-light text-center title-font no-indent">Image Credit: {{apod.copyright}} | Date: {{apod.date}}</p>
             </div>
             <div id="text_col" class="">
                 <p class="text-light mx-auto w-75 text-indent p-font fs-5">{{apod.explanation}}</p>

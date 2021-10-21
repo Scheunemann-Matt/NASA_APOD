@@ -59,6 +59,12 @@ def create_user():
     user_id = User.create(data)
     session['user_id'] = user_id
     session['user_name'] = data['first_name']
+    
+    if "archive" in request.form:
+        if request.form['archive'] == 'archive':
+            return redirect('/archive')
+        else:
+            return redirect(f'/{request.form["date"]}/archive')
     return redirect('/')
 
 @app.route('/users/login', methods=['POST'])
@@ -87,7 +93,8 @@ def login():
         if request.form['archive'] == 'archive':
             return redirect('/archive')
         else:
-            return redirect(f'/apod/{request.form["date"]}')
+            return redirect(f'/{request.form["date"]}/archive')
+
     return redirect('/')
 
 @app.route('/users/logout')
