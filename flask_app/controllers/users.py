@@ -113,7 +113,7 @@ def login():
 
     return redirect('/')
 
-@app.route('/users/logout')
+@app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
